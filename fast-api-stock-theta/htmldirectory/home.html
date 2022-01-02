@@ -1,0 +1,75 @@
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css">
+<script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
+
+<div class="ui horizontal divider"></div>
+<div class="ui horizontal divider"></div>
+
+<div class="ui one column stackable center aligned page grid">
+    <div class="column twelve wide">
+      <form>
+        <div class="ui input focus">
+          <input type="text" placeholder="Enter stock ticker here" name="tickeruiinput">
+        </div>
+        <br>
+        <h4 class="ui header"></h4>
+        <p>Optional Parameters</p>
+      <select class="ui dropdown" name="samplingrate" >
+        <option value="1">Select sampling rate (default 1 year)</option>
+        <option value="1">1 year sampling rate</option>
+        <option value="5">5 year sampling rate</option>
+        <option value="10">10 year sampling rate</option>
+      </select>
+      <select class="ui dropdown" name="stddevinput" >
+        <option value="1">Select probability (default 68%)</option>
+        <option value="1">68% (1 standard deviation)</option>
+        <option value="2">95% (2 standard deviation)</option>
+        <option value="3">99% (3 standard deviation)</option>
+      </select>
+
+      <select class="ui dropdown" name="daychangevariable">
+        <option value="1">Select the interval days (default 7 day price change)</option>
+        <option value="7">7 day price change</option>
+        <option value="30">30 day price change</option>
+      </select>
+       
+          <button class="ui button">Submit</button>
+          </form>
+    </div>
+ </div>
+
+
+
+ <div class="ui horizontal divider"></div>
+  
+ <div class="ui horizontal divider"></div>
+ 
+        <div class="ui two column grid">
+            <div class="column">
+              <div class="ui segment">
+                <h2 class="ui header">
+                  <img src={{ stockobject.return_logo() }} class="ui circular image ">
+                  {{ticker}}
+                </h2>
+            
+                        <span class="category"><font color='black'><b>{{ stockobject.return_prob_percentage() }}</b></font> of the time, the price of <b><font color='black'>{{ ticker }} </font></b>stock has changed between <font color='red'><b>{{stockobject.return_lower_bounds()}}% </b> </font>and <font color='green'><b>{{stockobject.return_upper_bounds()}}%</b> </font> for any given <font color='black'><b>{{ stockobject.return_periods()}}</b></font> period (for a <font color='black'><b>{{ samplingrate }}Y </font></b> sampling rate)</span>
+                        <p></p>
+                        <p><span class="category">Mean: {{ stockobject.return_mean() }}% </span></p>
+                        <p><span class="category">Standard Deviation:  {{ stockobject.return_std() }}% </span></p>
+                      
+                                          
+
+  
+                  
+                  
+              </div>
+              
+            </div>
+            <div class="column">
+              <div class="ui segment">
+                Exceptions outside of the 95% probability - tail events
+                {{ stockobject.return_html() | safe}}
+              </div>
+            </div>
+          </div>
+    
+
